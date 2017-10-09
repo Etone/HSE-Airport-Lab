@@ -1,0 +1,27 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="AirportWeb:war exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/airport</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="AirportWeb/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="AirportWeb" />
+          <element id="module-output" name="AirportEJB" />
+          <element id="jpa-descriptors" facet="AirportEJB/jpa/JPA" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="jboss-ejb-api_3.2_spec-1.0.0.Final" />
+          <element id="library" level="project" name="hibernate-jpa-2.1-api-1.0.0.Final" />
+          <element id="library" level="project" name="jboss-jsf-api_2.2_spec-2.2.12" />
+          <element id="library" level="project" name="Java EE 6-Java EE 6" />
+          <element id="library" level="project" name="primefaces-5.3" />
+          <element id="library" level="project" name="trontastic-1.0.10" />
+          <element id="library" level="project" name="dark-hive-1.0.10" />
+          <element id="library" level="project" name="glass-x-1.0.10" />
+        </element>
+      </element>
+      <element id="javaee-facet-resources" facet="AirportWeb/ejb/EJB" />
+      <element id="javaee-facet-resources" facet="AirportWeb/javaeeApplication/javaEEApplication" />
+    </root>
+  </artifact>
+</component>

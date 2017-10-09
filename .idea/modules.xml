@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../AirportEAR/AirportEAR.iml" filepath="$PROJECT_DIR$/../AirportEAR/AirportEAR.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../AirportEJB/AirportEJB.iml" filepath="$PROJECT_DIR$/../AirportEJB/AirportEJB.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AirportWeb.iml" filepath="$PROJECT_DIR$/AirportWeb.iml" />
+    </modules>
+  </component>
+</project>
