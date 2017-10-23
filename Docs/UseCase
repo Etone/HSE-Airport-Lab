@@ -1,0 +1,14 @@
+Air Controller Use Case
+
+Flugzeug möchte landen (getriggert durch Klick in UI)
+	Prüfe ob freier Parkplatz
+	Prüfe ob freie Landebahn
+	Berechne geschätzte Landezeit z (Zufallswert zwischen 4 und 10 Minuten wird zu aktueller Uhrzeit zugerechnet)
+	Trage geschätzte Landezeit in Datenbank ein
+	Landebahn zuordnen
+	Landebahn blockieren
+	Parkplatz blockieren 
+	Parkplatz zuordnen
+	Warten für neuen Zufallswert
+	Landebahn freigeben
+	Aktuelle Ankunftszeit in Datenbank eintragen
