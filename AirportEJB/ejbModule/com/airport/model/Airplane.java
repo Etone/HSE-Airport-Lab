@@ -1,6 +1,8 @@
 package com.airport.model;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
@@ -15,7 +17,15 @@ public class Airplane {
 	private int id;
 	
 	private String name;
+	
+	@Enumerated(EnumType.STRING)
+	private AirplaneState state;
 
+	public Airplane() {
+		state = AirplaneState.Flying;
+	}
+	
+	
 	public int getId() {
 		return id;
 	}
@@ -30,5 +40,13 @@ public class Airplane {
 
 	public void setName(String name) {
 		this.name = name;
-	} 
+	}
+	
+	public AirplaneState getState() {
+		return state;
+	}
+	
+	public void setState(AirplaneState state) {
+		this.state = state;
+	}
 }
