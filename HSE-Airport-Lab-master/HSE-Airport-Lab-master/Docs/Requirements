@@ -1,0 +1,14 @@
+
+    -The system shall be implemented using JEE
+    -The system shall run in Wildfly
+    -To implement the front-end primefaces shall be used
+    -The persistent data shall be stored in a database
+    -When an airplane approaches for a landing, the air controller shall select the airplane by identifier (number/name) from a list and enter the estimated arrival time
+    -Airplanes are presented in the list by their identifier and their airline, both are entities in the database
+    -When an airplane is landing, the air controller shall select a free runway. This runway shall then be locked until the airplane is parked. It shall not be possible to select a runway twice
+    -There shall be 4 runways selectable
+    -When an airplane is landing, the air controller shall select a free parking position. This position shall then be locked as long as the airplane is parked. It shall not be possible to select a parking position twice
+    -There shall be 8 parking positions selectable
+    -When the airplane is landed, the air controller shall enter the real arrival time
+    -When the airplane is parked, the air controller shall unlock the runway
+    -Estimated time and real arrival time shall be logged in the database. It shall be possible to see this protocol e.g. as a table in the UI
