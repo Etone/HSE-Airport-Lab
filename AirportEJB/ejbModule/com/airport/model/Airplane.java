@@ -20,7 +20,7 @@ public class Airplane {
 	
 	@Enumerated(EnumType.STRING)
 	private AirplaneState state;
-
+	
 	public Airplane() {
 		state = AirplaneState.Flying;
 	}
