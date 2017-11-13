@@ -9,11 +9,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
+import java.io.Serializable;
 
 @NamedQuery(name="airplane.findAll", query="select a from Airplane a order by a.name")
 
 @Entity
-public class Airplane {
+public class Airplane implements Serializable{
 	
 	@Id
 	@GeneratedValue
