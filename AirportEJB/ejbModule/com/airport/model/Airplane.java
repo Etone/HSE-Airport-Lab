@@ -3,9 +3,12 @@ package com.airport.model;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 
 @NamedQuery(name="airplane.findAll", query="select a from Airplane a order by a.name")
 
@@ -24,8 +27,7 @@ public class Airplane {
 	public Airplane() {
 		state = AirplaneState.Flying;
 	}
-	
-	
+
 	public int getId() {
 		return id;
 	}

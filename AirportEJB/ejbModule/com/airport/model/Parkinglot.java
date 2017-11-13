@@ -12,7 +12,6 @@ public class Parkinglot {
 	private int id;
 	
 	private boolean isFree;
-
 	
 	public Parkinglot() {
 		isFree = true;
