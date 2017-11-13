@@ -3,6 +3,9 @@ package com.airport.model;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+
+@NamedQuery(name="parkinglot.findAll", query="select p from Parkinglot p")
 
 @Entity
 public class Parkinglot {

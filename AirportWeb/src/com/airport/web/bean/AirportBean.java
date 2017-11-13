@@ -9,8 +9,10 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.persistence.Entity;
 
 import com.airport.model.Airplane;
+import com.airport.model.AirplaneState;
 import com.airport.model.Parkinglot;
 import com.airport.model.Runway;
 import com.airport.session.AirportEJB;
@@ -40,12 +42,12 @@ public class AirportBean implements Serializable {
 		airplane = new Airplane();
 		for(int i = 0; i < parkinglotCount; i++) {			
 			parkinglot = new Parkinglot();
-			//store lot in Database
+			airportEJB.store(parkinglot);
 		}
 		
 		for(int i = 0; i < runwayCount; i++) {
 			runway = new Runway();
-			//store in Database
+			airportEJB.store(runway);
 		}
 	}
 	
@@ -54,11 +56,11 @@ public class AirportBean implements Serializable {
 	}
 
 	public List<Runway> getRunways() {
-		return new ArrayList<Runway>();
+		return airportEJB.getRunways();
 	}
 	
 	public List<Parkinglot> getParkinglots() {
-		return new ArrayList<Parkinglot>();
+		return airportEJB.getParkinglots();
 	}
 	
 	public Airplane getAirplane() {
@@ -67,21 +69,25 @@ public class AirportBean implements Serializable {
 	
 	public void store() {
 		airportEJB.store(airplane);
-		airplane = new Airplane();
 	}
 	
 	public void landPlane() {
 		System.out.println("NYI");
+
 		
-		Parkinglot lot;
-		Runway runway;
-		
-		if((lot = getFreeParkingLot()) == null) {
-			//No Parkinglot, landing not allowed
+		if((parkinglot = getFreeParkingLot()) == null) {
+			throw new ArrayIndexOutOfBoundsException("No free parkinglot");
 		}
 		if((runway = getFreeRunway()) == null) {
-			//No free Runway, landing not allowed
+			throw new ArrayIndexOutOfBoundsException("No free runway");
 		}
+		
+		airplane.setRunway(runway);
+		runway.setFree(false);
+		parkinglot.setFree(false);
+		airplane.setState(AirplaneState.Landing);
+		
+		airportEJB.store(airplane);
 	}
 	
 	private Parkinglot getFreeParkingLot() {

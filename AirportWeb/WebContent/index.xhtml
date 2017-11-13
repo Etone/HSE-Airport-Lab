@@ -27,6 +27,16 @@
 			<p:column headerText="State">
 				<h:outputText value="#{airplane.state}" />
 			</p:column>
+			<p:column headerText="Parkinglot">
+				<h:outputText value="#{airplane.parkedAt?airplane.parkedAt.id:0}" />
+			</p:column>
+			<p:column headerText="Runway">
+				<h:outputText value="#{airplane.runway?airplane.runway.id:0}" />
+			</p:column>
+			
+			<p:column headerText="Landing">
+				<p:commandButton value="Init Landing" action="#{airportBean.landPlane}" update="airplaneTableForm"  />
+			</p:column>
 		</p:dataTable>
 	</h:form>
 </h:body>

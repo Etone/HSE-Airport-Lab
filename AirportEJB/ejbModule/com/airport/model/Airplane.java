@@ -24,6 +24,14 @@ public class Airplane {
 	@Enumerated(EnumType.STRING)
 	private AirplaneState state;
 	
+	@OneToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name = "id")
+	private Parkinglot parkedAt;
+	
+	@OneToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="id")
+	private Runway runway;
+	
 	public Airplane() {
 		state = AirplaneState.Flying;
 	}
@@ -50,5 +58,21 @@ public class Airplane {
 	
 	public void setState(AirplaneState state) {
 		this.state = state;
+	}
+	
+	public void setParked(Parkinglot parkedAt) {
+		this.parkedAt = parkedAt;
+	}
+	
+	public Parkinglot getParkedAt() {
+		return parkedAt;
+	}
+	
+	public void setRunway(Runway runway) {
+		this.runway = runway;
+	}
+	
+	public Runway getRunway() {
+		return runway;
 	}
 }
