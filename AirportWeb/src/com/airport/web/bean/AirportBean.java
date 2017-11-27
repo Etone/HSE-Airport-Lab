@@ -8,12 +8,11 @@ import com.airport.session.AirportEJB;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.ejb.Schedule;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @ManagedBean(name = "airportBean")
 @SessionScoped
@@ -103,8 +102,16 @@ public class AirportBean implements Serializable {
             }
         }
 
+
+
         if (airplane.getState() == AirplaneState.Flying) {
             freeRunway();
+
+            Date d = new Date();
+
+            airplane.setTimestampLanding(d.getTime());
+            Random rand = new Random();
+            airplane.setTimestampParking(d.getTime()+(long)(rand.nextInt(15)*1000));
 
             System.out.println(runway.getId());
 
@@ -119,15 +126,16 @@ public class AirportBean implements Serializable {
         }
     }
 
-    private Parkinglot getFreeParkingLot() {
+    private List<Parkinglot> getFreeParkingLots() {
+        List<Parkinglot> park = new ArrayList<>();
         for (Parkinglot lot : getParkinglots()) {
             if (lot.isFree()) {
                 //One Free, continue Parking
-                return lot;
+                park.add(lot);
             }
         }
         //No free Parkinglots
-        return null;
+        return park;
     }
 
     private List<Runway> getFreeRunways() {
@@ -144,11 +152,15 @@ public class AirportBean implements Serializable {
     }
 
     private void freeParkingLot() {
-        if ((parkinglot = getFreeParkingLot()) == null) {
-            noFreeParkinglots = true;
-            throw new ArrayIndexOutOfBoundsException("No free parkinglot");
-        } else {
+        if (getFreeParkingLots().size()>1) {
             noFreeParkinglots = false;
+            parkinglot = getParkinglots().get(0);
+        } else if (getFreeParkingLots().size()==1){
+            noFreeParkinglots = true;
+            parkinglot = getParkinglots().get(0);
+        } else {
+            noFreeParkinglots = true;
+            parkinglot = null;
         }
     }
 
@@ -163,4 +175,13 @@ public class AirportBean implements Serializable {
         }
     }
 
+
+    @Schedule(second = "*/10", minute = "*", hour = "*")
+    public void parkPlanes(){
+        Date d = new Date();
+        for (Airplane p : getAirplanes()){
+           //TODO
+
+        }
+    }
 }

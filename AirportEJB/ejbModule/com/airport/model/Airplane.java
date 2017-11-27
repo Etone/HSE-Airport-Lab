@@ -68,4 +68,27 @@ public class Airplane implements Serializable{
 	public Runway getRunway() {
 		return runway;
 	}
+
+    public void setParkedAt(Parkinglot parkedAt) {
+        this.parkedAt = parkedAt;
+    }
+
+    public long getTimestampLanding() {
+        return timestampLanding;
+    }
+
+    public void setTimestampLanding(long timestampLanding) {
+        this.timestampLanding = timestampLanding;
+    }
+
+    public long getTimestampParking() {
+        return timestampParking;
+    }
+
+    public void setTimestampParking(long timestampParking) {
+        this.timestampParking = timestampParking;
+    }
+
+    private long timestampLanding;
+	private long timestampParking;
 }
