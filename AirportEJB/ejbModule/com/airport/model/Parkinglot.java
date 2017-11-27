@@ -9,9 +9,18 @@ import javax.persistence.NamedQuery;
 
 @Entity
 public class Parkinglot {
-	
-	@GeneratedValue
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
 	@Id
+	@GeneratedValue
 	private int id;
 	
 	private boolean isFree;

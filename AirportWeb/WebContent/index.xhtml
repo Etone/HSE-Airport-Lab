@@ -3,6 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
@@ -35,8 +36,32 @@
 			</p:column>
 			
 			<p:column headerText="Landing">
-				<p:commandButton value="Init Landing" action="#{airportBean.landPlane}" update="airplaneTableForm"  />
+				<p:commandButton value="Init Landing" action="#{airportBean.landPlane(airplane.id)}" update="airplaneTableForm" rendered="#{not airportBean.noFreeRunways}"/>
 			</p:column>
+		</p:dataTable>
+		Runway
+		<p:dataTable value="#{airportBean.runways}" var="runway">
+			<p:column headerText="free">
+				<h:outputText value="#{runway.free}" />
+			</p:column>
+			<p:column headerText="id">
+				<h:outputText value="#{runway.id}" />
+			</p:column>
+
+
+
+		</p:dataTable>
+		Parkinglot
+		<p:dataTable value="#{airportBean.parkinglots}" var="parkinglot">
+			<p:column headerText="free">
+				<h:outputText value="#{parkinglot.free}" />
+			</p:column>
+			<p:column headerText="id">
+				<h:outputText value="#{parkinglot.id}" />
+			</p:column>
+
+
+
 		</p:dataTable>
 	</h:form>
 </h:body>

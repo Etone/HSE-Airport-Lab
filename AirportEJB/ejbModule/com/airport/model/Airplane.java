@@ -1,14 +1,6 @@
 package com.airport.model;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @NamedQuery(name="airplane.findAll", query="select a from Airplane a order by a.name")
@@ -25,11 +17,11 @@ public class Airplane implements Serializable{
 	@Enumerated(EnumType.STRING)
 	private AirplaneState state;
 	
-	@OneToOne(fetch=FetchType.LAZY)
+	@OneToOne(fetch=FetchType.EAGER, cascade = {CascadeType.ALL})
 	@JoinColumn(name = "id")
 	private Parkinglot parkedAt;
 	
-	@OneToOne(fetch=FetchType.LAZY)
+	@OneToOne(fetch=FetchType.EAGER, cascade = {CascadeType.ALL})
 	@JoinColumn(name="id")
 	private Runway runway;
 	

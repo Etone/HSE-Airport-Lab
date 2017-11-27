@@ -9,23 +9,32 @@ import javax.persistence.NamedQuery;
 
 @Entity
 public class Runway {
-	
-	@GeneratedValue
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
 	@Id
+	@GeneratedValue
 	private int id;
 	
-	private boolean isFree;
+	private boolean free;
 	
 	public Runway() {
-		isFree = true;
+		free = true;
 	}
 
 	public boolean isFree() {
-		return isFree;
+		return free;
 	}
 
 	public void setFree(boolean isFree) {
-		this.isFree = isFree;
+		this.free = isFree;
 	}
 
 }

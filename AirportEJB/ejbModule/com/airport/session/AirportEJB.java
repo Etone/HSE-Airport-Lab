@@ -41,14 +41,14 @@ public class AirportEJB {
         Airplane newAirplane = entityManager.find(Airplane.class, airplane.getId());
         if (null != newAirplane) {
 
-
             newAirplane.setRunway(airplane.getRunway());
             newAirplane.setState(airplane.getState());
             newAirplane.setParked(airplane.getParkedAt());
-            entityManager.persist(newAirplane);
+            entityManager.merge(newAirplane);
 
         } else {
-            entityManager.persist(airplane);
+            entityManager.merge(airplane);
+
         }
 
     }
