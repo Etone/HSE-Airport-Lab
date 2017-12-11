@@ -1,14 +1,13 @@
 package com.airport.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.NamedQuery;
+import javax.persistence.*;
 
 @NamedQuery(name="parkinglot.findAll", query="select p from Parkinglot p")
 
 @Entity
 public class Parkinglot {
+
+
 
 	public int getId() {
 		return id;
@@ -22,6 +21,17 @@ public class Parkinglot {
 	@Id
 	@GeneratedValue
 	private int id;
+
+	@OneToOne(fetch = FetchType.EAGER)
+	private Airplane plane;
+
+	public Airplane getPlane() {
+		return plane;
+	}
+
+	public void setPlane(Airplane plane) {
+		this.plane = plane;
+	}
 	
 	private boolean isFree;
 	
@@ -35,5 +45,10 @@ public class Parkinglot {
 
 	public void setFree(boolean isFree) {
 		this.isFree = isFree;
+	}
+
+	@Override
+	public String toString() {
+		return "Parkinglot{" + "id=" + id + ", isFree=" + isFree + '}';
 	}
 }

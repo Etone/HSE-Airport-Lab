@@ -18,14 +18,13 @@ public class AirportEJB {
 
     public List<Airplane> getAirplanes() {
         Query query = entityManager.createNamedQuery("airplane.findAll");
-
+System.out.println(query.toString());
         @SuppressWarnings("unchecked") List<Airplane> airplanes = query.getResultList();
         return airplanes;
     }
 
     public List<Runway> getRunways() {
         Query query = entityManager.createNamedQuery("runway.findAll");
-
         @SuppressWarnings("unchecked") List<Runway> runways = query.getResultList();
         return runways;
     }
@@ -37,27 +36,35 @@ public class AirportEJB {
         return lots;
     }
 
-    public void store(Airplane airplane) {
-        Airplane newAirplane = entityManager.find(Airplane.class, airplane.getId());
-        if (null != newAirplane) {
-
-            newAirplane.setRunway(airplane.getRunway());
-            newAirplane.setState(airplane.getState());
-            newAirplane.setParked(airplane.getParkedAt());
-            entityManager.merge(newAirplane);
-
-        } else {
-            entityManager.merge(airplane);
-
+    public void merge(Airplane airplane){
+        
+        if (airplane.getRunway()!= null){
+            entityManager.merge(airplane.getRunway());
         }
 
+        if (airplane.getParkedAt()!= null){
+            entityManager.merge(airplane.getParkedAt());
+        }
+
+        entityManager.merge(airplane);
+    }
+    public void merge(Runway runway){
+        entityManager.merge(runway);
+    }
+    public void merge(Parkinglot parkinglot){
+        entityManager.merge(parkinglot);
+    }
+
+
+    public void store(Airplane airplane) {
+            entityManager.persist(airplane);
     }
 
     public void store(Runway runway) {
-        entityManager.persist(runway);
+        entityManager.merge(runway);
     }
 
     public void store(Parkinglot lot) {
-        entityManager.persist(lot);
+        entityManager.merge(lot);
     }
 }

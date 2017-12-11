@@ -17,12 +17,12 @@ public class Airplane implements Serializable{
 	@Enumerated(EnumType.STRING)
 	private AirplaneState state;
 	
-	@OneToOne(fetch=FetchType.EAGER, cascade = {CascadeType.ALL})
-	@JoinColumn(name = "id")
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "id",insertable = true,updatable = true)
 	private Parkinglot parkedAt;
-	
-	@OneToOne(fetch=FetchType.EAGER, cascade = {CascadeType.ALL})
-	@JoinColumn(name="id")
+
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "plane")
+	@JoinColumn(name="id",insertable = true, updatable = true)
 	private Runway runway;
 	
 	public Airplane() {
@@ -91,4 +91,11 @@ public class Airplane implements Serializable{
 
     private long timestampLanding;
 	private long timestampParking;
+
+	@Override
+	public String toString() {
+		return "Airplane{" + "id=" + id + ", name='" + name + '\'' + ", state=" + state + ", parkedAt=" + parkedAt +
+				", runway=" + runway + ", timestampLanding=" + timestampLanding + ", timestampParking=" +
+				timestampParking + '}';
+	}
 }

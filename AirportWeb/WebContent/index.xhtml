@@ -11,6 +11,7 @@
 <h:head>
 </h:head>
 <h:body>
+
 	<h1>Airport Esslingen</h1>
 
 	<h:form>
@@ -21,7 +22,7 @@
 	</h:form>
 	<p/>
 	<h:form id="airplaneTableForm">
-		<p:dataTable value="#{airportBean.airplanes}" var="airplane">
+		<p:dataTable value="#{airportBean.airplanes}" var="airplane" id="tblAirplane">
 			<p:column headerText="Airplanes">
 				<h:outputText value="#{airplane.name}" />
 			</p:column>
@@ -29,30 +30,34 @@
 				<h:outputText value="#{airplane.state}" />
 			</p:column>
 			<p:column headerText="Parkinglot">
-				<h:outputText value="#{airplane.parkedAt?airplane.parkedAt.id:0}" />
+				<h:outputText value="#{(airplane.parkedAt!=null)?airplane.parkedAt.id: 'Not parked'}" />
 			</p:column>
 			<p:column headerText="Runway">
-				<h:outputText value="#{airplane.runway?airplane.runway.id:-1}" />
+				<h:outputText value="#{(airplane.runway!=null)?airplane.runway.id: 'Not landing'}" />
 			</p:column>
 			
 			<p:column headerText="Landing">
-				<p:commandButton value="Init Landing" action="#{airportBean.landPlane(airplane.id)}" update="airplaneTableForm" rendered="#{not airportBean.noFreeRunways}"/>
+				<p:commandButton value="Init Landing" action="#{airportBean.landPlane(airplane.id)}" update="airplaneTableForm" rendered="#{not airportBean.noFreeRunways}" id="initButton"/>
 			</p:column>
 		</p:dataTable>
 		Runway
-		<p:dataTable value="#{airportBean.runways}" var="runway">
+		<p:dataTable value="#{airportBean.runways}" var="runway" id="runway">
 			<p:column headerText="free">
 				<h:outputText value="#{runway.free}" />
 			</p:column>
 			<p:column headerText="id">
 				<h:outputText value="#{runway.id}" />
 			</p:column>
-
-
-
-		</p:dataTable>
+			<!--<p:column headerText="Parking">
+				<p:selectOneMenu id="parkinglot" value="0" style="width:150px">
+					<f:selectItem itemLabel="Select parkinglot" itemValue="" noSelectionOption="false" />
+					<f:selectItems value="#{airportBean.freeParkingLotIDs}" />
+				</p:selectOneMenu>
+				<p:commandButton value="Init Parking" action="#{airportBean.parkPlane(runway.id)}" update="airplaneTableForm" rendered="#{not airportBean.noFreeParkinglots}"/>
+			</p:column>-->
+	</p:dataTable>
 		Parkinglot
-		<p:dataTable value="#{airportBean.parkinglots}" var="parkinglot">
+		<p:dataTable value="#{airportBean.parkinglots}" var="parkinglot" id="parkinglot">
 			<p:column headerText="free">
 				<h:outputText value="#{parkinglot.free}" />
 			</p:column>
@@ -63,6 +68,18 @@
 
 
 		</p:dataTable>
+
 	</h:form>
+
+	<h:form id="refr" >
+		<p:panel header="refresh">
+
+			<p:commandButton value="refresh" action="#{airportBean.update}" update="airplaneTableForm:tblAirplane,airplaneTableForm:runway,airplaneTableForm:parkinglot" id="refrButton" rerender="airplaneTableForm:initButton"/>
+		</p:panel>
+	</h:form>
+	<script>
+
+    		window.setInterval(document.getElementById('refrButton').click(),3000);
+	</script>
 </h:body>
 </html>

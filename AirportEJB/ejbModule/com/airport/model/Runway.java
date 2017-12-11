@@ -1,14 +1,22 @@
 package com.airport.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.NamedQuery;
+import javax.persistence.*;
 
 @NamedQuery(name="runway.findAll", query="select r from Runway r")
 
 @Entity
 public class Runway {
+
+	@OneToOne(fetch = FetchType.EAGER)
+	private Airplane plane;
+
+	public Airplane getPlane() {
+		return plane;
+	}
+
+	public void setPlane(Airplane plane) {
+		this.plane = plane;
+	}
 
 	public int getId() {
 		return id;
@@ -37,4 +45,8 @@ public class Runway {
 		this.free = isFree;
 	}
 
+	@Override
+	public String toString() {
+		return "Runway{" + "id=" + id + ", free=" + free + '}';
+	}
 }

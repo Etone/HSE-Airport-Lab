@@ -32,6 +32,27 @@ public class AirportBean implements Serializable {
     private Runway runway;
 
     private boolean noFreeParkinglots = false;
+    private boolean noFreeRunways = false;
+
+    public void setFreeParkingLots(List<Parkinglot> freeParkingLots) {
+        this.freeParkingLots = freeParkingLots;
+    }
+
+    public List<Parkinglot> getFreeParkingLots() {
+        return freeParkingLots;
+    }
+
+    private List<Parkinglot> freeParkingLots;
+
+    public List<Integer> getFreeParkingLotIDs() {
+        return freeParkingLotIDs;
+    }
+
+    public void setFreeParkingLotIDs(List<Integer> freeParkingLotIDs) {
+        this.freeParkingLotIDs = freeParkingLotIDs;
+    }
+
+    private List<Integer> freeParkingLotIDs;
 
     public boolean isNoFreeParkinglots() {
         return noFreeParkinglots;
@@ -49,7 +70,6 @@ public class AirportBean implements Serializable {
         this.noFreeRunways = noFreeRunways;
     }
 
-    private boolean noFreeRunways = false;
 
     public AirportBean() {
         System.out.println("AIRPORT: " + UUID.randomUUID());
@@ -67,6 +87,8 @@ public class AirportBean implements Serializable {
             runway = new Runway();
             airportEJB.store(runway);
         }
+
+        updateFreeParkingLots();
     }
 
     public List<Airplane> getAirplanes() {
@@ -103,7 +125,6 @@ public class AirportBean implements Serializable {
         }
 
 
-
         if (airplane.getState() == AirplaneState.Flying) {
             freeRunway();
 
@@ -111,22 +132,29 @@ public class AirportBean implements Serializable {
 
             airplane.setTimestampLanding(d.getTime());
             Random rand = new Random();
-            airplane.setTimestampParking(d.getTime()+(long)(rand.nextInt(15)*1000));
+            airplane.setTimestampParking(d.getTime()+(long)3000); //(rand.nextInt(15)*1000+1000)
 
             System.out.println(runway.getId());
 
+            System.out.println(runway);
             runway.setFree(false);
             System.out.println(runway.isFree());
             parkinglot.setFree(false);
-            airplane.setState(AirplaneState.Landing);
             airplane.setRunway(runway);
-            airportEJB.store(airplane);
+            airplane.setState(AirplaneState.Landing);
+            runway.setPlane(airplane);
+            airportEJB.merge(runway);
+            System.out.println(airplane.getRunway());
+            airportEJB.merge(airplane);
+            System.out.println("XXC");
+            System.out.println(airplane.toString());
+
 
             airplane = new Airplane();
         }
     }
 
-    private List<Parkinglot> getFreeParkingLots() {
+    public void updateFreeParkingLots() {
         List<Parkinglot> park = new ArrayList<>();
         for (Parkinglot lot : getParkinglots()) {
             if (lot.isFree()) {
@@ -135,7 +163,14 @@ public class AirportBean implements Serializable {
             }
         }
         //No free Parkinglots
-        return park;
+        freeParkingLots = park;
+
+        List<Integer> freeParkingLIs = new ArrayList<>();
+        for (Parkinglot p : park) {
+            freeParkingLIs.add(p.getId());
+        }
+
+        freeParkingLotIDs = freeParkingLIs;
     }
 
     private List<Runway> getFreeRunways() {
@@ -152,16 +187,17 @@ public class AirportBean implements Serializable {
     }
 
     private void freeParkingLot() {
-        if (getFreeParkingLots().size()>1) {
+        if (freeParkingLots.size() > 1) {
             noFreeParkinglots = false;
             parkinglot = getParkinglots().get(0);
-        } else if (getFreeParkingLots().size()==1){
+        } else if (freeParkingLots.size() == 1) {
             noFreeParkinglots = true;
             parkinglot = getParkinglots().get(0);
         } else {
             noFreeParkinglots = true;
             parkinglot = null;
         }
+        updateFreeParkingLots();
     }
 
     private void freeRunway() {
@@ -169,19 +205,17 @@ public class AirportBean implements Serializable {
             noFreeRunways = false;
             runway = getFreeRunways().get(0);
 
-        } else  {
+        } else {
             runway = getFreeRunways().get(0);
             noFreeRunways = true;
         }
     }
 
+    public void update(){
+        freeRunway();
+        freeParkingLot();
 
-    @Schedule(second = "*/10", minute = "*", hour = "*")
-    public void parkPlanes(){
-        Date d = new Date();
-        for (Airplane p : getAirplanes()){
-           //TODO
-
-        }
     }
+
+
 }
