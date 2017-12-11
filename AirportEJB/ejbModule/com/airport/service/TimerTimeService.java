@@ -70,6 +70,7 @@ public class TimerTimeService {
             }
 
             tmpRunway.setFree(true);
+            tmpRunway.setPlane(null);
             airport.merge(tmpRunway);
             a.setRunway(null);
 
@@ -77,6 +78,7 @@ public class TimerTimeService {
             freeParkinglots.remove(0);
 
             tmpParkinglot.setFree(false);
+            tmpParkinglot.setPlane(a);
             a.setParked(tmpParkinglot);
             a.setState(AirplaneState.Parking);
             airport.merge(tmpParkinglot);

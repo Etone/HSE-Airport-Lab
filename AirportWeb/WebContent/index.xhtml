@@ -9,8 +9,13 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
+	<script>
+        function loading() {
+            setInterval(document.getElementById('refrButton').click(),1000)
+        }
+	</script>
 </h:head>
-<h:body>
+<h:body onload="loading()">
 
 	<h1>Airport Esslingen</h1>
 
@@ -29,15 +34,10 @@
 			<p:column headerText="State">
 				<h:outputText value="#{airplane.state}" />
 			</p:column>
-			<p:column headerText="Parkinglot">
-				<h:outputText value="#{(airplane.parkedAt!=null)?airplane.parkedAt.id: 'Not parked'}" />
-			</p:column>
-			<p:column headerText="Runway">
-				<h:outputText value="#{(airplane.runway!=null)?airplane.runway.id: 'Not landing'}" />
-			</p:column>
+
 			
 			<p:column headerText="Landing">
-				<p:commandButton value="Init Landing" action="#{airportBean.landPlane(airplane.id)}" update="airplaneTableForm" rendered="#{not airportBean.noFreeRunways}" id="initButton"/>
+				<p:commandButton value="Init Landing" action="#{airportBean.landPlane(airplane.id)}" update="airplaneTableForm" rendered="#{(not airportBean.noFreeRunways) and (airportBean.freeParkingLots.size()!=0)}" id="initButton"/>
 			</p:column>
 		</p:dataTable>
 		Runway
@@ -47,6 +47,9 @@
 			</p:column>
 			<p:column headerText="id">
 				<h:outputText value="#{runway.id}" />
+			</p:column>
+			<p:column headerText="Plane id">
+				<h:outputText value="#{runway.plane.id}" />
 			</p:column>
 			<!--<p:column headerText="Parking">
 				<p:selectOneMenu id="parkinglot" value="0" style="width:150px">
@@ -64,6 +67,9 @@
 			<p:column headerText="id">
 				<h:outputText value="#{parkinglot.id}" />
 			</p:column>
+			<p:column headerText="Plane id">
+				<h:outputText value="#{parkinglot.plane.id}" />
+			</p:column>
 
 
 
@@ -71,15 +77,12 @@
 
 	</h:form>
 
-	<h:form id="refr" >
+	<h:form id="refr" rendered="true">
 		<p:panel header="refresh">
 
 			<p:commandButton value="refresh" action="#{airportBean.update}" update="airplaneTableForm:tblAirplane,airplaneTableForm:runway,airplaneTableForm:parkinglot" id="refrButton" rerender="airplaneTableForm:initButton"/>
 		</p:panel>
 	</h:form>
-	<script>
 
-    		window.setInterval(document.getElementById('refrButton').click(),3000);
-	</script>
 </h:body>
 </html>

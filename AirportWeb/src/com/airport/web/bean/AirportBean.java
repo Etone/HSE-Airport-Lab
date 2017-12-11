@@ -8,7 +8,6 @@ import com.airport.session.AirportEJB;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.ejb.Schedule;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import java.io.Serializable;
@@ -132,7 +131,7 @@ public class AirportBean implements Serializable {
 
             airplane.setTimestampLanding(d.getTime());
             Random rand = new Random();
-            airplane.setTimestampParking(d.getTime()+(long)3000); //(rand.nextInt(15)*1000+1000)
+            airplane.setTimestampParking(d.getTime() + (long) 3000); //(rand.nextInt(15)*1000+1000)
 
             System.out.println(runway.getId());
 
@@ -211,7 +210,7 @@ public class AirportBean implements Serializable {
         }
     }
 
-    public void update(){
+    public void update() {
         freeRunway();
         freeParkingLot();
 
