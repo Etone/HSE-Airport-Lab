@@ -18,11 +18,12 @@
 <h:body onload="loading()">
 
 	<h1>Airport Esslingen</h1>
-
+	<h2>Airplanes</h2>
 	<h:form>
 		<p:panel header="New airplane">
 			Airplane name: <p:inputText value="#{airportBean.airplane.name}" /><p/>
 			<p:commandButton value="Add airplane" action="#{airportBean.store}" update="airplaneTableForm" />
+			<p:commandButton value="refresh" action="#{airportBean.update}" update="airplaneTableForm:tblAirplane,airplaneTableForm:runway,airplaneTableForm:parkinglot" id="refrButton" rerender="airplaneTableForm:initButton"/>
 		</p:panel>
 	</h:form>
 	<p/>
@@ -40,7 +41,7 @@
 				<p:commandButton value="Init Landing" action="#{airportBean.landPlane(airplane.id)}" update="airplaneTableForm" rendered="#{(not airportBean.noFreeRunways) and (airportBean.freeParkingLots.size()!=0)}" id="initButton"/>
 			</p:column>
 		</p:dataTable>
-		Runway
+		<h2>Runway</h2>
 		<p:dataTable value="#{airportBean.runways}" var="runway" id="runway">
 			<p:column headerText="free">
 				<h:outputText value="#{runway.free}" />
@@ -51,15 +52,8 @@
 			<p:column headerText="Plane id">
 				<h:outputText value="#{runway.plane.id}" />
 			</p:column>
-			<!--<p:column headerText="Parking">
-				<p:selectOneMenu id="parkinglot" value="0" style="width:150px">
-					<f:selectItem itemLabel="Select parkinglot" itemValue="" noSelectionOption="false" />
-					<f:selectItems value="#{airportBean.freeParkingLotIDs}" />
-				</p:selectOneMenu>
-				<p:commandButton value="Init Parking" action="#{airportBean.parkPlane(runway.id)}" update="airplaneTableForm" rendered="#{not airportBean.noFreeParkinglots}"/>
-			</p:column>-->
 	</p:dataTable>
-		Parkinglot
+		<h2>Parkinglot</h2>
 		<p:dataTable value="#{airportBean.parkinglots}" var="parkinglot" id="parkinglot">
 			<p:column headerText="free">
 				<h:outputText value="#{parkinglot.free}" />
@@ -77,12 +71,6 @@
 
 	</h:form>
 
-	<h:form id="refr" rendered="true">
-		<p:panel header="refresh">
-
-			<p:commandButton value="refresh" action="#{airportBean.update}" update="airplaneTableForm:tblAirplane,airplaneTableForm:runway,airplaneTableForm:parkinglot" id="refrButton" rerender="airplaneTableForm:initButton"/>
-		</p:panel>
-	</h:form>
 
 </h:body>
 </html>
